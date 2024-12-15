@@ -2,11 +2,9 @@
 
 import * as React from "react";
 import {
-  BookOpen,
   Bot,
   Plus,
   Server,
-  Settings2,
   SquareTerminal,
   Ticket,
   FolderOpen
@@ -35,36 +33,26 @@ const data = {
   navMain: [
     {
       title: "Create New",
-      url: "#",
+      url: "/create",
       icon: Plus,
     },
     {
       title: "All Posts",
-      url: "#",
+      url: "/blogs",
       icon: SquareTerminal,
       isActive: true,
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
     },
   ],
   projects: [
     {
       name: "Create New",
-      url: "#!",
+      url: "/create-project",
       gitlink : "#",
       icon: Plus,
     },
     {
       name: "Book a Ticket",
-      url: "#!",
+      url: "#",
       gitlink : "#",
       icon: Ticket,
     },

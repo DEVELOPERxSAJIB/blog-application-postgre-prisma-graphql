@@ -1,11 +1,15 @@
-export default function Home() {
-  return (
-    <div className="row bg-red-700">
-      <div className="container">
-        <h2>I am sajib</h2>
-        <p>lorem ipsum</p>
-      </div>
-    </div>
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "./api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
 
-  );
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+
+  console.log('session', session);
+
+  if (!session) {
+    redirect("/api/auth/signin");
+  } else {
+    redirect("/");
+  }
 }
