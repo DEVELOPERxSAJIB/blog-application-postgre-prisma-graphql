@@ -16,6 +16,8 @@ import {
 import React from "react";
 import { ModeToggle } from "./ThemeSwitch";
 import { Card } from "@/components/ui/card";
+import { Suspense } from "react";
+
 
 
 type Props = {
@@ -24,6 +26,8 @@ type Props = {
 
 export default function Sidebar({ children }: Props) {
   return (
+    <Suspense fallback={<div>Loading...</div>}>
+    
       <SidebarProvider>
         <AppSidebar collapsible="offcanvas" />
         <SidebarInset>
@@ -55,5 +59,7 @@ export default function Sidebar({ children }: Props) {
           <div className="flex flex-1 flex-col gap-4 p-4 pt-0">{children}</div>
         </SidebarInset>
       </SidebarProvider>
+      </Suspense >
   );
 }
+

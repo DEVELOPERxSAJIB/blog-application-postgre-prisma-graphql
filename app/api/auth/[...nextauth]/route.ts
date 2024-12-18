@@ -49,8 +49,16 @@ export const authOptions: NextAuthOptions = {
       }
     },
     async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
+      if (token) {
+        const dbUser = await prisma.user.findUnique({
+          where: { email: token.email },
+        });
+
+        if (dbUser) {
+          token.id = dbUser.id; // Attach DB ID
+        } else {
+          console.error("No user found in the database.");
+        }
       }
       return token;
     },

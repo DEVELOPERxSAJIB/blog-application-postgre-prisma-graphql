@@ -7,9 +7,10 @@ import {
   Server,
   SquareTerminal,
   Ticket,
-  FolderOpen
+  FolderOpen,
+  Users,
+  Files
 } from "lucide-react";
-
 import { NavMain } from "@/components/nav-main";
 import { NavProjects } from "@/components/nav-projects";
 import { NavUser } from "@/components/nav-user";
@@ -21,26 +22,36 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { useSession } from "next-auth/react";
+import { DashboardNav } from "./dashboard-nav";
+
 
 // This is sample data.
 const data = {
-  user: {
-    name: "Md Sajib",
-    email: "sajib@gmail.com.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-
-  navMain: [
+  adminDashboard: [
     {
-      title: "Create New",
-      url: "/create",
-      icon: Plus,
+      title: "My Users",
+      url: "/admin/dashboard/users",
+      icon: Users,
     },
+    {
+      title: "All Posts",
+      url: "/admin/dashboard/posts",
+      icon: Files,
+      isActive: true,
+    },
+  ],
+  navMain: [
     {
       title: "All Posts",
       url: "/blogs",
       icon: SquareTerminal,
       isActive: true,
+    },
+    {
+      title: "Create New",
+      url: "/create",
+      icon: Plus,
     },
   ],
   projects: [
@@ -78,17 +89,22 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+  const { data: session } = useSession();
+  const { user } = session;
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <TeamSwitcher />
       </SidebarHeader>
       <SidebarContent>
+        <DashboardNav items={data.adminDashboard} />
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

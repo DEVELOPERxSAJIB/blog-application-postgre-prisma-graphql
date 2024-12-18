@@ -1,4 +1,10 @@
 export const typeDefs = `#graphql
+
+    type DeleteResponse {
+        success: Boolean!
+        message: String!
+    }
+
     type Link {
         id: String
         title: String
@@ -8,6 +14,7 @@ export const typeDefs = `#graphql
         createdAt: String
         categories: String
         userId: String
+        bookmarkedBy: [User]
         user : User
     }
 
@@ -27,6 +34,7 @@ export const typeDefs = `#graphql
         links: [Link]!
 
         users : [User]
+        user(id: String!): User
     }
 
     type Mutation {
@@ -41,11 +49,6 @@ export const typeDefs = `#graphql
         userId: String!
         ): Link
 
-        addToBookmark(
-            userId: String!
-            linkId: String!
-        ): Link
-
         updateLink (
             id: String!
             title: String
@@ -58,6 +61,19 @@ export const typeDefs = `#graphql
         deleteLink (
             id: String!
         ) : Link
+
+        addToBookmark(
+            userId: String!
+            linkId: String!
+        ): Link
+
+        removeFromBookmark(userId: String!, linkId: String!): Link!
+
+        updateUserRole(id: ID!, role: String!): User!
+
+        deleteUser (
+            id: String!
+        ) : User
 
     }
 `;
