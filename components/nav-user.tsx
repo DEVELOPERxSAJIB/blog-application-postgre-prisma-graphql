@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import Image from "next/image";
+import { signOut } from "next-auth/react";
 
 export function NavUser({
   user,
@@ -36,6 +37,9 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
+  if (!user) {
+    return null;
+  }
 
   return (
     <SidebarMenu>
@@ -48,8 +52,8 @@ export function NavUser({
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <Image
-                  src={user.image}
-                  alt={user.name}
+                  src={user?.image ? user.image : "https://static.vecteezy.com/system/resources/previews/016/058/540/non_2x/icon-person-design-and-line-art-icon-free-vector.jpg"}
+                  alt={user?.name || "avatar-nav"}
                   height={50}
                   width={50}
                 />
@@ -72,7 +76,7 @@ export function NavUser({
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <Image
-                    src={user.image}
+                    src={user?.image ? user?.image :'https://static.vecteezy.com/system/resources/previews/016/058/540/non_2x/icon-person-design-and-line-art-icon-free-vector.jpg'}
                     alt={user.name}
                     height={50}
                     width={50}
@@ -100,7 +104,9 @@ export function NavUser({
               </Link>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => {
+              signOut({ callbackUrl: "/api/auth/signin" })
+            }}>
               <LogOut />
               Log out
             </DropdownMenuItem>

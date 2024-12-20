@@ -56,12 +56,6 @@ const data = {
   ],
   projects: [
     {
-      name: "Create New",
-      url: "/create-project",
-      gitlink : "#",
-      icon: Plus,
-    },
-    {
       name: "Book a Ticket",
       url: "#",
       gitlink : "#",
@@ -91,7 +85,7 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   const { data: session } = useSession();
-  const { user } = session;
+  const user = session?.user;
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -99,7 +93,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <TeamSwitcher />
       </SidebarHeader>
       <SidebarContent>
-        <DashboardNav items={data.adminDashboard} />
+        <DashboardNav items={data.adminDashboard} user={user} />
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
       </SidebarContent>

@@ -1,7 +1,6 @@
 "use client";
 
 import { type LucideIcon } from "lucide-react";
-
 import { Collapsible } from "@/components/ui/collapsible";
 import {
   SidebarGroup,
@@ -13,7 +12,7 @@ import {
 import Link from "next/link";
 
 export function DashboardNav({
-  items,
+  items, user
 }: {
   items: {
     title: string;
@@ -26,6 +25,9 @@ export function DashboardNav({
     }[];
   }[];
 }) {
+
+  // console.log("sidebar", user);
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Admin Dash</SidebarGroupLabel>

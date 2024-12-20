@@ -25,10 +25,8 @@ const GET_ALL_LINKS = gql`
   }
 `;
 
-const page = () => {
-  const { data, loading, error, refetch } = useQuery(GET_ALL_LINKS, {
-    // pollInterval : "100"
-  });
+const Page = () => {
+  const { data, loading, error, refetch } = useQuery(GET_ALL_LINKS);
 
   // Handle loading and error states
   if (loading) return <Preloader />;
@@ -40,4 +38,4 @@ const page = () => {
   return <PostTable data={posts} refetch={refetch} />;
 };
 
-export default page;
+export default Page;

@@ -1,22 +1,43 @@
-import { NextResponse } from 'next/server';
-import { getToken } from 'next-auth/jwt';
+import { getToken } from "next-auth/jwt";
+import { NextResponse } from "next/server";
 
-export async function middleware(req : any) {
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+export async function middleware(req) {
+  const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  const pathname = req.nextUrl.pathname;
 
-  const { pathname } = req.nextUrl;
+  const protectedRoutes = [
+    "/blogs",
+    "/admin/dashboard",
+    "/profile",
+    "/bookmarks",
+    "/create",
+  ];
 
-  // Allow the request if it's for public routes or the token exists
-  if (pathname.startsWith('/api/auth/signin') || token) {
-    return NextResponse.next();
+  // Redirect signed-in users away from the sign-in page
+  if (session && pathname === "/api/auth/signin") {
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
-  // Redirect to sign-in page if not authenticated
-  if (!token && pathname !== '/api/auth/signin') {
-    return NextResponse.redirect(new URL('/api/auth/signin', req.url));
+  // Check if the path is a protected route
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
+
+  if (!session && isProtectedRoute) {
+    return NextResponse.redirect(new URL("/api/auth/signin", req.url));
   }
+
+  // Proceed for all other requests
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/((?!api/public|_next|static|favicon.ico).*)'],
+  matcher: [
+    "/blogs/:path*",
+    "/admin/dashboard/:path*",
+    "/profile/:path*",
+    "/bookmarks",
+    "/create",
+    "/api/auth/signin",
+  ],
 };

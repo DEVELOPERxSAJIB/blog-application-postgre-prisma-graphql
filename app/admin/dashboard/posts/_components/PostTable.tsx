@@ -214,7 +214,14 @@ const PostTable = ({
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const [sorting, setSorting] = React.useState<SortingState>([]);
+  // Set initial sorting to sort by "createdAt" descending
+  const [sorting, setSorting] = React.useState<SortingState>([
+    {
+      id: "createdAt",
+      desc: true,
+    },
+  ]);
+
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );

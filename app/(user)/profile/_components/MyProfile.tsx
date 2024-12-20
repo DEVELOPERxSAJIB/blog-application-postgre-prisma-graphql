@@ -153,7 +153,7 @@ const MyProfile = ({ userId }) => {
           </div>
           <div className="flex flex-col items-center -mt-20">
             <Image
-              src={user.image}
+              src={user.image || "https://static.vecteezy.com/system/resources/previews/016/058/540/non_2x/icon-person-design-and-line-art-icon-free-vector.jpg"}
               className="w-40 h-auto border-4 border-white rounded-full"
               alt="profile-image"
               height={40}

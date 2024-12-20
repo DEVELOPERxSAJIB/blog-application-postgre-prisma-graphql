@@ -119,7 +119,7 @@ const SinglePost = () => {
   const sortedPosts = allPosts?.links
     ? allPosts.links.sort((a, b) => b.createdAt - a.createdAt)
     : [];
-  const latestPosts = sortedPosts.slice(0, 2);
+  const latestPosts = sortedPosts.slice(0, 3);
 
   useEffect(() => {
     console.log("included post", loggedInUserId);

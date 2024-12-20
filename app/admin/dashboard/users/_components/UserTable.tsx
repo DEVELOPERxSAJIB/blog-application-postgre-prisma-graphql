@@ -13,7 +13,13 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, CopyMinus, EyeIcon, Trash } from "lucide-react";
+import {
+  ArrowUpDown,
+  ChevronDown,
+  CopyMinus,
+  EyeIcon,
+  Trash,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -63,8 +69,15 @@ const UPDATE_USER_ROLE = gql`
   }
 `;
 
-const UserTable = ({ data, refetch }: { data: User[];  refetch: () => void }) => {
+const UserTable = ({
+  data,
+  refetch,
+}: {
+  data: User[];
+  refetch: () => void;
+}) => {
   const [updateUserRole] = useMutation(UPDATE_USER_ROLE);
+
 
   const columns: ColumnDef<User>[] = [
     {
@@ -120,7 +133,7 @@ const UserTable = ({ data, refetch }: { data: User[];  refetch: () => void }) =>
           <Select
             value={role}
             onValueChange={(selectedRole) => {
-              handleUpdateRole(userId, selectedRole)
+              handleUpdateRole(userId, selectedRole);
               console.log(`for ${userId} selected role ${selectedRole}`);
             }}
           >
@@ -171,6 +184,7 @@ const UserTable = ({ data, refetch }: { data: User[];  refetch: () => void }) =>
     },
   ];
 
+
   const handleUpdateRole = (id: string, role: string) => {
     updateUserRole({ variables: { id, role: role } })
       .then(() => {
@@ -195,7 +209,12 @@ const UserTable = ({ data, refetch }: { data: User[];  refetch: () => void }) =>
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [sorting, setSorting] = React.useState<SortingState>([
+    {
+      id: "createdAt",
+      desc: true,
+    },
+  ]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
@@ -308,10 +327,6 @@ const UserTable = ({ data, refetch }: { data: User[];  refetch: () => void }) =>
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
         <div className="space-x-2">
           <Button
             variant="outline"

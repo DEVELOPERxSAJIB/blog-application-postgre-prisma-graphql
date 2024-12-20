@@ -41,6 +41,10 @@ const GET_ALL_LINKS = gql`
         name
         image
       }
+      bookmarkedBy {
+        id
+        name
+      }
     }
   }
 `;
@@ -64,7 +68,7 @@ const Allblogs = () => {
         <div className="w-full bg-opacity-40 backdrop-filter backdrop-blur-lg">
           <div className="w-12/12 mx-auto rounded-2xl bg-opacity-40 backdrop-filter backdrop-blur-lg">
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 text-center mx-auto">
-              {posts?.map(( post : Post) => (
+              {[...posts].reverse()?.map(( post : Post) => (
                 <BlogCard key={post.id} post={post} />
               ))}
             </div>
