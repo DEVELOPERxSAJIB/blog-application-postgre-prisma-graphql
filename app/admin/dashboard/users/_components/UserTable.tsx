@@ -50,6 +50,7 @@ import Link from "next/link";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import { toast } from "sonner";
+import Swal from "sweetalert2";
 
 export type User = {
   id: string;
@@ -69,6 +70,19 @@ const UPDATE_USER_ROLE = gql`
   }
 `;
 
+const DELETE_USER = gql`
+  mutation DeleteUser($deleteUserId: String!) {
+    deleteUser(id: $deleteUserId) {
+      id
+      email
+      name
+      image
+      createdAt
+      role
+    }
+  }
+`;
+
 const UserTable = ({
   data,
   refetch,
@@ -77,7 +91,9 @@ const UserTable = ({
   refetch: () => void;
 }) => {
   const [updateUserRole] = useMutation(UPDATE_USER_ROLE);
-
+  const [deleteUser, {}] = useMutation(DELETE_USER, {
+    refetchQueries: ["users"],
+  });
 
   const columns: ColumnDef<User>[] = [
     {
@@ -166,7 +182,7 @@ const UserTable = ({
         return (
           <div>
             <Button
-              // onClick={() => handleDelete(row.getValue("id"))}
+              onClick={() => handleDelete(row.getValue("id"))}
               className="mr-1"
               variant="destructive"
               size={"sm"}
@@ -184,7 +200,6 @@ const UserTable = ({
     },
   ];
 
-
   const handleUpdateRole = (id: string, role: string) => {
     updateUserRole({ variables: { id, role: role } })
       .then(() => {
@@ -201,9 +216,38 @@ const UserTable = ({
       });
   };
 
-  // const handleDelete = (id) => {
-  //   alert(`Deleting row with ID: ${id}`);
-  // };
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This post will be deleted forever",
+      icon: "warning",
+      confirmButtonText: "Sure",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "",
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteUser({ variables: { deleteUserId: id } })
+          .then(() => {
+            toast("User Deleted Successfully", {
+              action: {
+                label: <CopyMinus size={16} />,
+                onClick: () => console.log("Minus"),
+              },
+            });
+            refetch();
+          })
+          .catch((error) => {
+            console.error("Error deleting post:", error);
+            Swal.fire(
+              "Error!",
+              "There was a problem deleting the post.",
+              "error"
+            );
+          });
+      }
+    });
+  };
 
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});

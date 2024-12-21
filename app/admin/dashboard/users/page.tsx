@@ -1,9 +1,14 @@
-'use client'
+"use client";
 
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
 import UserTable from "./_components/UserTable";
 import Preloader from "@/components/Loader/Preloader";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { redirect } from "next/navigation";
+import { toast } from "sonner";
+import { CopyMinus } from "lucide-react";
 
 // GraphQL query
 const GET_ALL_USER = gql`
@@ -19,9 +24,17 @@ const GET_ALL_USER = gql`
   }
 `;
 
-
 const AllUsers = () => {
   const { data, loading, error, refetch } = useQuery(GET_ALL_USER);
+
+  const { data: session } = useSession();
+  const role = session?.user?.role || "";
+
+  useEffect(() => {
+    if (role === "USER") {
+      redirect("/blogs");
+    }
+  });
 
   // Handle loading and error states
   if (loading) return <Preloader />;
@@ -30,11 +43,7 @@ const AllUsers = () => {
   // Safely access users
   const users = data?.users || [];
 
-  return (
-    <UserTable data={users} refetch={refetch} />
-  );
-
-
+  return <UserTable data={users} refetch={refetch} />;
 };
 
 export default AllUsers;

@@ -93,7 +93,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <TeamSwitcher />
       </SidebarHeader>
       <SidebarContent>
-        <DashboardNav items={data.adminDashboard} user={user} />
+        {user?.role === "ADMIN" && <DashboardNav items={data.adminDashboard} user={user} />}
+        
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
       </SidebarContent>

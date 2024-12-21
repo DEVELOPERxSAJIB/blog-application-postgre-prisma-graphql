@@ -1,11 +1,15 @@
-import { v2 as cloudinary } from "cloudinary";
+let cloudinary;
 
-// Configuration
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+if (typeof window === 'undefined') {
+  // Import Cloudinary only on the server side
+  const { v2: cloudinaryInstance } = require('cloudinary');
+  cloudinary = cloudinaryInstance;
+  // Configuration
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+}
 
-
-export default cloudinary
+export default cloudinary;

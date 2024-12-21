@@ -34,7 +34,33 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 import { gql, useMutation } from "@apollo/client";
 import { toast } from "sonner";
-import Preloader from "@/components/Loader/Preloader";
+
+export const deleteImage = async (imageURL: string) => {
+  const publicId = imageURL?.split('/').slice(7).join('/').split('.')[0];
+
+  try {
+    const response = await fetch('/api/delete-image', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ public_id: publicId }),
+    });
+
+    // Check if the response is not empty
+    const textResponse = await response.text(); // Get the raw response text
+    const data = textResponse ? JSON.parse(textResponse) : {};
+
+    if (response.ok) {
+      console.log(data.message || 'Image deleted successfully');
+    } else {
+      console.error(data.error || 'Error deleting image');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
 
 export type User = {
   name: string;
@@ -73,7 +99,7 @@ const PostTable = ({
 }) => {
   const [
     deletePost,
-    { loading: deleteLoading, error: deleteError, data: deleteData },
+    { loading: deleteLoading, error: deleteError, data: deletedData },
   ] = useMutation(DELETE_POST_MUTATION);
 
   const columns: ColumnDef<Post>[] = [
@@ -190,6 +216,8 @@ const PostTable = ({
       if (result.isConfirmed) {
         deletePost({ variables: { id: id } })
           .then(() => {
+            deleteImage(deletedData?.deleteLink?.imageURL);
+
             toast("Post Deleted Successfully", {
               action: {
                 label: <CopyMinus size={16} />,

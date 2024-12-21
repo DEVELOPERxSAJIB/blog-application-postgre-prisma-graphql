@@ -9,6 +9,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import { Toaster } from "@/components/ui/sonner";
 import { Suspense, useEffect, useState } from "react";
+import Preloader from "@/components/Loader/Preloader";
+import ClientOnly from "./ClientOnly";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -38,7 +40,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Preloader />}>
           <AuthProvider session={session}>
             <ThemeProvider
               attribute="class"
@@ -47,7 +49,9 @@ export default async function RootLayout({
               disableTransitionOnChange
             >
               <MyApp>
-                <Sidebar>{children}</Sidebar>
+                <Sidebar>
+                  <ClientOnly>{children}</ClientOnly>
+                </Sidebar>
                 <Toaster />
               </MyApp>
             </ThemeProvider>

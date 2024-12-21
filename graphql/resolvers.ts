@@ -215,11 +215,12 @@ export const resolvers = {
       ctx: { prisma: PrismaClient }
     ) => {
       try {
-        await ctx.prisma.link.delete({
+        const deletedLink = await ctx.prisma.link.delete({
           where: {
             id: _args.id,
           },
         });
+        return deletedLink
       } catch (error) {
         console.error(error);
         return {

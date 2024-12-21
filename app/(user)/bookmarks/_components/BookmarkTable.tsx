@@ -30,29 +30,12 @@ const BookmarkTable = ({ post }) => {
       />
       <div className="relative mb-4 rounded-2xl">
         <Image
-          className="max-h-80 rounded-2xl w-full object-cover transition-transform duration-300 transform group-hover:scale-105"
+          className="h-48 w-full rounded-2xl object-cover transition-transform duration-300 transform group-hover:scale-105"
           src={post?.imageURL}
           alt={post?.title}
           height={200}
           width={500}
         />
-        <div className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="h-5 w-5 text-red-700"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-            />
-          </svg>
-          <span className="ml-1 text-sm text-slate-400">2</span>
-        </div>
         <Link
           className="flex justify-center items-center bg-purple-700 bg-opacity-80 z-10 absolute top-0 left-0 w-full h-full text-white rounded-2xl opacity-0 transition-all duration-300 transform group-hover:scale-105 text-xl group-hover:opacity-100"
           href={`/blogs/${post.id}`}
@@ -86,7 +69,10 @@ const BookmarkTable = ({ post }) => {
           <div className="pr-3">
             <Image
               className="h-12 w-12 rounded-full object-cover"
-              src={authore?.image || "https://cdn-icons-png.flaticon.com/512/6914/6914292.png"} // Fallback image
+              src={
+                authore?.image ||
+                "https://cdn-icons-png.flaticon.com/512/6914/6914292.png"
+              }
               alt={post?.title || "Post image"}
               height={80}
               width={80}
