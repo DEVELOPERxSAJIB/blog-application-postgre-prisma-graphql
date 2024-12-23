@@ -1,29 +1,11 @@
 "use client";
 
 import React from "react";
-import image1 from "../../../assets/post1.webp";
-import Image from "next/image";
-import { Card } from "@/components/ui/card";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
 import Preloader from "@/components/Loader/Preloader";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { GetSession } from "@/utils/GetSession";
 import { useSession } from "next-auth/react";
 import BookmarkTable from "./_components/BookmarkTable";
-
-type Props = {
-  post: {
-    title: string;
-    description: string;
-    imageURL: string;
-    url: string;
-    category: string;
-    users: Array<string | number>;
-  };
-  i: number;
-};
 
 const LOGGED_IN_USER = gql`
   query User($userId: String!) {

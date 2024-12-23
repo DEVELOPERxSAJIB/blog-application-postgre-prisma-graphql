@@ -7,8 +7,6 @@ import PostTable from "./_components/PostTable";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { redirect } from "next/navigation";
-import { toast } from "sonner";
-import { CopyMinus } from "lucide-react";
 
 // GraphQL query
 const GET_ALL_LINKS = gql`

@@ -12,7 +12,7 @@ import {
 import Link from "next/link";
 
 export function DashboardNav({
-  items, user
+  items
 }: {
   items: {
     title: string;
@@ -25,8 +25,6 @@ export function DashboardNav({
     }[];
   }[];
 }) {
-
-  // console.log("sidebar", user);
 
   return (
     <SidebarGroup>

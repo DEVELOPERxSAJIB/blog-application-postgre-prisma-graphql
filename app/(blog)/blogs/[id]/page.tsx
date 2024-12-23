@@ -89,7 +89,7 @@ const SinglePost = () => {
   const { id } = params;
 
   const { data: session } = useSession();
-  const loggedInUserId: string | undefined = session?.user?.id;
+  const { id: loggedInUserId } = session?.user as { id: string };
 
   const {
     data: allPosts,
@@ -102,11 +102,11 @@ const SinglePost = () => {
 
   const [
     addToBookmark,
-    { loading: addBookmarkLoader, error: addBookMarkError },
+    { loading: addBookmarkLoader, },
   ] = useMutation(ADD_TO_BOOKMARK);
   const [
     removeFromBookmark,
-    { loading: removeBookmarkLoader, error: removeBookmarkError },
+    { loading: removeBookmarkLoader },
   ] = useMutation(REMOVE_FROM_BOOKMARK);
 
   const [isBookmarked, setIsBookmarked] = useState(false);

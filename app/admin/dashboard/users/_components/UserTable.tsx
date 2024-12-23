@@ -216,7 +216,7 @@ const UserTable = ({
       });
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id : string) => {
     Swal.fire({
       title: "Are you sure?",
       text: "This post will be deleted forever",

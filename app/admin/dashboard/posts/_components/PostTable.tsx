@@ -11,7 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ChevronDown, CopyMinus, EyeIcon, Loader, Trash } from "lucide-react";
+import { ChevronDown, CopyMinus, EyeIcon, Trash } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -35,30 +35,9 @@ import Swal from "sweetalert2";
 import { gql, useMutation } from "@apollo/client";
 import { toast } from "sonner";
 
-export const deleteImage = async (imageURL: string) => {
+const deleteImage = async (imageURL: string) => {
   const publicId = imageURL?.split('/').slice(7).join('/').split('.')[0];
-
-  try {
-    const response = await fetch('/api/delete-image', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ public_id: publicId }),
-    });
-
-    // Check if the response is not empty
-    const textResponse = await response.text(); // Get the raw response text
-    const data = textResponse ? JSON.parse(textResponse) : {};
-
-    if (response.ok) {
-      console.log(data.message || 'Image deleted successfully');
-    } else {
-      console.error(data.error || 'Error deleting image');
-    }
-  } catch (error) {
-    console.error('Error:', error);
-  }
+  console.log(publicId);
 };
 
 
@@ -99,7 +78,7 @@ const PostTable = ({
 }) => {
   const [
     deletePost,
-    { loading: deleteLoading, error: deleteError, data: deletedData },
+    { data: deletedData },
   ] = useMutation(DELETE_POST_MUTATION);
 
   const columns: ColumnDef<Post>[] = [

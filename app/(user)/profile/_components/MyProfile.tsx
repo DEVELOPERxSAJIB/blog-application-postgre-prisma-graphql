@@ -1,6 +1,5 @@
 "use client";
 
-import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import React from "react";
 import profileBG from "../../../../assets/profilebg.jpg";
@@ -224,7 +223,7 @@ const MyProfile = ({ userId }) => {
               <div className="w-full mt-4 bg-opacity-40 backdrop-filter backdrop-blur-lg">
                 <div className="w-12/12 mx-auto rounded-2xl bg-opacity-40 backdrop-filter backdrop-blur-lg">
                   <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5 text-center mx-auto">
-                    {links?.map((post : any) => (
+                    {links?.map((post) => (
                       <ProfileBlogCard key={post.id} post={post} />
                     ))}
                   </div>

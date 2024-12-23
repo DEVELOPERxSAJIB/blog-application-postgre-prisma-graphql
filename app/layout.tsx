@@ -6,11 +6,11 @@ import MyApp from "@/components/MyApp";
 import Sidebar from "./_components/Sidebar";
 import AuthProvider from "@/components/Provider";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import { Toaster } from "@/components/ui/sonner";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
 import Preloader from "@/components/Loader/Preloader";
 import ClientOnly from "./ClientOnly";
+import authOptions from "./api/auth/[...nextauth]/authOptions";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,7 +33,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions).catch((error) => {
+    console.error("Error fetching session:", error);
+  });;
 
   return (
     <html lang="en" suppressHydrationWarning={true}>

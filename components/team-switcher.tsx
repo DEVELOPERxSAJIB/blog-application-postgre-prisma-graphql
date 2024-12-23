@@ -1,11 +1,6 @@
 "use client";
 
 import * as React from "react";
-
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,

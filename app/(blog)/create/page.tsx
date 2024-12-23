@@ -71,11 +71,11 @@ const CREATE_BLOG_MUTATION = gql`
 const CreateBlog = () => {
   const session = useSession();
 
-  const { id: loggedInUserId } = session?.data?.user;
+  const { id: loggedInUserId = "" } = session?.data?.user || {};
   const { image: loggedInUserImage } = session?.data?.user;
 
   const [image, setImage] = useState<File | null>(null);
-  const [previewImage, setPreviewImage] = useState<File | string>();
+  const [previewImage, setPreviewImage] = useState<string | undefined>(undefined);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [addLink, { loading }] = useMutation(CREATE_BLOG_MUTATION);
@@ -127,6 +127,7 @@ const CreateBlog = () => {
       // Clear the form
       form.reset();
       setImage(null);
+      setPreviewImage(null);
 
       toast("Blog published successfully", {
         action: {
@@ -230,8 +231,8 @@ const CreateBlog = () => {
                     placeholder="Upload Your Image"
                     ref={fileInputRef}
                     onChange={(e) => {
-                      handleOnChange(e); // Call your custom change handler
-                      field.onChange(e); // Call the default React Hook Form change handler
+                      handleOnChange(e); 
+                      field.onChange(e);
                     }}
                   />
                 </FormControl>

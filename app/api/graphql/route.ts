@@ -1,22 +1,16 @@
-import { Context, createContext } from '@/graphql/context';
-import { resolvers } from '@/graphql/resolvers';
-import { typeDefs } from '@/graphql/typeDefs';
-import prisma from '@/prisma/db';
 import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
-import { NextRequest } from 'next/server';
+import { typeDefs } from '@/graphql/typeDefs';
+import { resolvers } from '@/graphql/resolvers';
+import { createContext, Context } from '@/graphql/context';
 
-
-// Create Apollo Server instance
 const apolloServer = new ApolloServer<Context>({
-  typeDefs : typeDefs,
-  resolvers : resolvers,
-  context: async () => createContext(),
+  typeDefs,
+  resolvers,
 });
 
-// Export handlers for each HTTP method
-const handler = startServerAndCreateNextHandler<NextRequest>(apolloServer, {
-    context : async (req, res) => ({req, res, prisma})
+const handler = startServerAndCreateNextHandler(apolloServer, {
+  context: async (req, res) => createContext(req, res),
 });
 
 export const GET = handler;
