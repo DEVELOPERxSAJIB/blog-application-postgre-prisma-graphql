@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  type: "module",
   async redirects() {
     return [
       {
@@ -14,7 +15,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "http",
-        hostname: "**", 
+        hostname: "**",
       },
       {
         protocol: "https",
@@ -23,10 +24,6 @@ const nextConfig = {
     ],
   },
   typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
     ignoreBuildErrors: true,
   },
 };
