@@ -67,7 +67,7 @@ const authOptions: NextAuthOptions = {
         }
 
         let image =
-          "https://static.vecteezy.com/system/resources/previews/016/058/540/non_2x/icon-person-design-and-line-art-icon-free-vector.jpg"; // Default image
+          "https://static.vecteezy.com/system/resources/previews/016/058/540/non_2x/icon-person-design-and-line-art-icon-free-vector.jpg";
 
         // Set image based on the provider
         if (account?.provider === "google" && "picture" in profile) {

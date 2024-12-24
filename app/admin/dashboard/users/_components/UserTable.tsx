@@ -150,7 +150,6 @@ const UserTable = ({
             value={role}
             onValueChange={(selectedRole) => {
               handleUpdateRole(userId, selectedRole);
-              console.log(`for ${userId} selected role ${selectedRole}`);
             }}
           >
             <SelectTrigger className="w-auto">

@@ -1,7 +1,9 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 
+console.log(process.env.NEXT_GRAPHQL_URL);
 const apolloClient = new ApolloClient({
-  uri: 'http://localhost:3000/api/graphql',
+
+  uri: process.env.NEXT_GRAPHQL_URL,
   cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: {

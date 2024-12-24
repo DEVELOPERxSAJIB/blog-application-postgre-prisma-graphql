@@ -122,7 +122,6 @@ const SinglePost = () => {
   const latestPosts = sortedPosts.slice(0, 3);
 
   useEffect(() => {
-    console.log("included post", loggedInUserId);
     if (post?.bookmarkedBy?.some((user) => user.id === loggedInUserId)) {
       setIsBookmarked(true);
     } else {

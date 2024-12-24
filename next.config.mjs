@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  type: "module",
   async redirects() {
     return [
       {
@@ -22,6 +21,9 @@ const nextConfig = {
         hostname: "**",
       },
     ],
+  },
+  env: {
+    NEXT_GRAPHQL_URL: process.env.NEXT_GRAPHQL_URL,
   },
   typescript: {
     ignoreBuildErrors: true,
