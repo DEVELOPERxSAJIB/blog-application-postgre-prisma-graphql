@@ -1,8 +1,6 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 
-console.log(process.env.NEXT_GRAPHQL_URL);
 const apolloClient = new ApolloClient({
-
   uri: process.env.NEXT_GRAPHQL_URL,
   cache: new InMemoryCache(),
   defaultOptions: {
@@ -13,6 +11,7 @@ const apolloClient = new ApolloClient({
       fetchPolicy: "no-cache",
     },
   },
+  credentials: 'include',
 })
 
 export default apolloClient

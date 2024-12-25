@@ -39,7 +39,6 @@
     "graphql-tag": "^2.12.6",
     "haq-cloudinary": "^1.6.1",
     "lucide-react": "^0.468.0",
-    "micro-cors": "^0.1.1",
     "moment": "^2.30.1",
     "next": "14.2.20",
     "next-auth": "^4.24.7",
