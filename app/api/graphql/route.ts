@@ -32,7 +32,7 @@ const corsMiddleware = async (handler, req) => {
       {
         status: 200,
         headers: {
-          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": "https://statter-blog-application.vercel.app",
           "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
           "Access-Control-Allow-Headers": "Content-Type, Authorization",
         },
@@ -41,7 +41,7 @@ const corsMiddleware = async (handler, req) => {
   }
 
   const response = await handler(req);
-  response.headers.set("Access-Control-Allow-Origin", "*");
+  response.headers.set("Access-Control-Allow-Origin", "https://statter-blog-application.vercel.app");
   response.headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   response.headers.set(
     "Access-Control-Allow-Headers",
