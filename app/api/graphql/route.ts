@@ -13,7 +13,7 @@ import { NextResponse } from "next/server";
 const apolloServer = new ApolloServer<Context>({
   typeDefs,
   resolvers,
-  introspection : true,
+  introspection: true,
   plugins: [
     process.env.NODE_ENV === "production"
       ? ApolloServerPluginLandingPageProductionDefault({
@@ -27,12 +27,13 @@ const apolloServer = new ApolloServer<Context>({
 // CORS Middleware
 const corsMiddleware = async (handler, req) => {
   if (req.method === "OPTIONS") {
-    return NextResponse.json(
-      {},
+    return new NextResponse(
+      JSON.stringify({ message: "CORS preflight response" }),
       {
         status: 200,
         headers: {
-          "Access-Control-Allow-Origin": "https://statter-blog-application.vercel.app",
+          "Access-Control-Allow-Origin":
+          "https://statter-blog-application.vercel.app",
           "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
           "Access-Control-Allow-Headers": "Content-Type, Authorization",
         },
@@ -41,7 +42,10 @@ const corsMiddleware = async (handler, req) => {
   }
 
   const response = await handler(req);
-  response.headers.set("Access-Control-Allow-Origin", "https://statter-blog-application.vercel.app");
+  response.headers.set(
+    "Access-Control-Allow-Origin",
+    "https://statter-blog-application.vercel.app"
+  );
   response.headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   response.headers.set(
     "Access-Control-Allow-Headers",
