@@ -7,6 +7,7 @@ import {
   ApolloServerPluginLandingPageLocalDefault,
   ApolloServerPluginLandingPageProductionDefault,
 } from "@apollo/server/plugin/landingPage/default";
+import { NextResponse } from "next/server";
 
 // Initialize Apollo Server
 const apolloServer = new ApolloServer<Context>({
@@ -26,14 +27,17 @@ const apolloServer = new ApolloServer<Context>({
 // CORS Middleware
 const corsMiddleware = async (handler, req) => {
   if (req.method === "OPTIONS") {
-    return new Response(null, {
-      status: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-      },
-    });
+    return NextResponse.json(
+      {},
+      {
+        status: 200,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        },
+      }
+    );
   }
 
   const response = await handler(req);
