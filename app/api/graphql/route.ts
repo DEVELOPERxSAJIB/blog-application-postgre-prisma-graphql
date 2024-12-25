@@ -12,6 +12,7 @@ import {
 const apolloServer = new ApolloServer<Context>({
   typeDefs,
   resolvers,
+  introspection : true,
   plugins: [
     process.env.NODE_ENV === "production"
       ? ApolloServerPluginLandingPageProductionDefault({
@@ -23,7 +24,6 @@ const apolloServer = new ApolloServer<Context>({
 });
 
 // CORS Middleware
-// CORS Middleware for Next.js app router
 const corsMiddleware = async (handler, req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, {

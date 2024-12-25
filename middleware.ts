@@ -38,5 +38,6 @@ export const config = {
     "/profile/:path*",
     "/bookmarks",
     "/create",
+    "/api/auth/signin",
   ],
 };
